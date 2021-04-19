@@ -2,4 +2,4 @@
 
 vim configurations
 
-Vim Script cheatsheet[VimScript](https://devhints.io/vimscript)
+Vim Script cheatsheet -> [VimScript](https://devhints.io/vimscript)
