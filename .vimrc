@@ -1,3 +1,7 @@
+set nocompatible              "We want the latest vim settings/options"
+
+so ~/.vim/plugins.vim
+
 syntax enable
 
 "-------Make backspace behave like every other editor."
@@ -28,9 +32,20 @@ set guioptions-=R
 set hlsearch         "highlights the searched word"
 set incsearch        "incrementally search"
 
+"-------Split Management--------"
+set splitbelow              "New sp will be created below the first split"
+set splitright              "New vsp will be created at the right side of the vim"
 
+nmap <C-J> <C-W><C-J>
+nmap <C-K> <C-W><C-K>
+nmap <C-L> <C-W><C-L>
+nmap <C-H> <C-W><C-H>
 
 "-------Mappings--------"
-
-
+"-------Make it easy to edit the vimrc file"
+nmap <Leader>ev :tabedit  ~/.vimrc<cr>
+"-------Add simple highlight removal"
+nmap <Leader><space> :nohlsearch<cr>
+"-------add simple NERDTreeToggle--------------"
+nmap <C-\> :NERDTreeToggle<cr>
 
