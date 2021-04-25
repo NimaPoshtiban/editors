@@ -1,0 +1,211 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'mhartington/oceanic-next'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'chriskempson/base16-vim'
+Plugin 'andymass/vim-matchup'
+Plugin 'phpactor/phpactor', {'for': 'php', 'branch': 'master', 'do': 'composer install --no-dev -o'}
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'mattn/emmet-vim'
+Plugin 'Rigellute/rigel'
+Plugin '907th/vim-auto-save'
+Plugin 'posva/vim-vue'
+Plugin 'kaicataldo/material.vim'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+"Plugin 'tpope/vim-vinegar'
+Plugin 'tomasiser/vim-code-dark'
+Plugin 'preservim/nerdtree'
+Plugin 'prettier/vim-prettier', { 'do': 'yarn install' }
+
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+   
+
+let mapleader=',' "change leader 
+
+
+
+"---------------------------- Visual Configurations ----------------------------
+"Theme config
+" Theme
+syntax enable
+" for vim 7
+set t_Co=256
+set t_ut=
+" for vim 8
+if (has("termguicolors"))
+    set termguicolors
+endif
+" colorscheme base16-ia-dark
+" colorscheme material
+" colorscheme rigel
+colorscheme codedark
+set splitbelow "open new split in below
+set splitright "open new split in right
+set linespace=6
+
+
+set guioptions-=m "remove menu bar
+set guioptions-=r "remove right-hand scroll bar
+set guioptions-=L "remove left-hand scroll bar
+set guioptions-=T "remove toolbar
+set guioptions-=T "remove toolbar
+
+set number
+
+set list lcs=trail:·,tab:»·   "show dot for display space
+
+map <silent> <F11>
+            \    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+"fullscreen
+
+let g:material_theme_style = 'ocean'
+
+"Just display filename in tab
+set guitablabel=\[%N\]\ %t\ %M
+
+"NERDTree
+map <C-k> :NERDTreeToggle<CR>
+nmap <Leader>f :NERDTreeFind<CR>
+"---------------------- Plugins Configuration -------------------"
+"phpactor
+" Include use statement
+nmap <Leader>u :call phpactor#UseAdd()<CR>
+
+" Invoke the context menu
+nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+
+" Invoke the navigation menu
+nmap <Leader>nn :call phpactor#Navigate()<CR>
+
+" Goto definition of class or class member under the cursor
+nmap <Leader>o :call phpactor#GotoDefinition()<CR>
+
+" Show brief information about the symbol under the cursor
+nmap <Leader>K :call phpactor#Hover()<CR>
+
+" Transform the classes in the current file
+nmap <Leader>tt :call phpactor#Transform()<CR>
+
+" Generate a new class (replacing the current file)
+nmap <Leader>cc :call phpactor#ClassNew()<CR>
+
+let g:phpactorPhpBin = "/usr/bin/php7.4"
+let g:phpactorOmniAutoClassImport = v:true
+autocmd FileType php setlocal omnifunc=phpactor#Complete
+let g:phpactorCompletionIgnoreCase = 0
+
+
+"vim-airline
+let g:airline#extensions#tabline#enabled = 0 "enable tabline
+let g:airline#extensions#tabline#formatter = 'unique_tail' "change show tabs 
+nnoremap <C-tab>   :bnext<CR>
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'codedark'
+
+"vim-match-up
+let g:loaded_matchit = 1
+
+
+"Nerd Commenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+"just for remove it
+map <Leader>haminjoori <Plug>NERDCommenterComment('n', 'Comment')<Cr>
+
+
+"Emmet
+let g:user_emmet_leader_key='<C-I>'
+
+"CTRLp
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git\|vendor'
+
+"
+map <C-p> :Files<CR>
+
+"--------------------------- Other configs ------------------------"
+
+"Automatically source the vimrc file
+""autocmd BufWritePost .vimrc source %
+
+"paste from outside
+noremap <leader>v "+gP 
+
+set tabstop=4 shiftwidth=4 expandtab "convert tab to space
+
+"for auto bracket 
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap [<CR> [<CR>]<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+inoremap chap <%=  %><left><left><left>
+
+au BufEnter,BufRead *.blade.php set filetype=html  "set blade file as html  
+
+"shortkey for access to vimrc quickly
+nmap <Leader>ev :tabedit ~/.vimrc<cr>
+nmap <Leader>en :tabedit %/../note.txt<cr>
+
+
+let g:auto_save = 1
+"reformat
+nnoremap <Leader>r gg=G<cr> 
+filetype indent on
+"delete with rm -r
+let g:netrw_localrmdir='rm -r'
+"for changing cursor into insert and normal mode
+" autocmd InsertEnter,InsertLeave * set cul!
+"exit to normal mode
+:imap jj <Esc>
+
+" map <leader>t :silent !phpcbf --standard=psr2 %:p<cr>
+set autoread
+autocmd FileType ruby setlocal shiftwidth=2 softtabstop=2 expandtab
+
+
+"add jbuilder syntax highlighting
+au BufNewFile,BufRead *.json.jbuilder set ft=ruby
+
+"tab config
+nmap ,tn <Esc>:tabnew<CR>
+nmap ,tl <Esc>:tabs<CR>
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#trailing_comma = 'all'
+set linespace=8
